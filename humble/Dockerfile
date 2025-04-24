@@ -73,16 +73,13 @@ RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:mozillateam/ppa -y && 
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-# Install VSCodium
-RUN wget https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-    -O /usr/share/keyrings/vscodium-archive-keyring.asc && \
-    echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.asc ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main' \
-    | tee /etc/apt/sources.list.d/vscodium.list && \
-    apt-get update -q && \
-    apt-get install -y codium && \
-    apt-get autoclean && \
-    apt-get autoremove && \
-    rm -rf /var/lib/apt/lists/*
+# Install VSCode
+RUN sudo apt update && sudo apt upgrade -y && \
+    sudo apt install software-properties-common apt-transport-https wget -y && \
+    wget -O- https://packages.microsoft.com/keys/microsoft.asc | sudo gpg — dearmor | sudo tee /usr/share/keyrings/vscode.gpg && \
+    echo deb [arch=amd64 signed-by=/usr/share/keyrings/vscode.gpg] https://packages.microsoft.com/repos/vscode stable main | sudo tee /etc/apt/sources.list.d/vscode.list && \
+    sudo apt update && sudo apt upgrade -y && \
+    sudo apt install code
 
 # Install ROS
 ENV ROS_DISTRO humble
