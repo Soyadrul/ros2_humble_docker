@@ -1,7 +1,7 @@
 {
   "name": "ros2_humble_docker",
   "remoteUser": "ubuntu",
-  "workspaceFolder": "/home/ubuntu/Desktop/ROS2",
+  "workspaceFolder": "/home/ubuntu/Desktop",
   "dockerComposeFile": "../compose.yaml",
   "service": "ros2-container"
 }
