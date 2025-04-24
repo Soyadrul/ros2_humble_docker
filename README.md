@@ -68,7 +68,7 @@ Follow the next steps to build the Ubuntu container:
    chmod u+x humble/entrypoint.sh
    ```
 
-3. Build the Docker image (this will take a while for the Pi 5)
+3. Build the Docker image (this will take approximately ~42 minutes)
    ```bash
    docker compose -f 'compose.yaml' up -d --build
    ```
