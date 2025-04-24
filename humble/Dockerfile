@@ -18,6 +18,11 @@
 FROM ubuntu:jammy-20250404
 
 ARG TARGETPLATFORM
+
+# Default user and password
+ARG USER=ubuntu
+ARG PASSWD=ubuntu
+
 LABEL maintainer="Tiryoh<tiryoh@gmail.com>"
 
 SHELL ["/bin/bash", "-c"]
@@ -49,6 +54,10 @@ RUN apt-get update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
+# Add default user
+RUN useradd -m -s /bin/bash ${USER} \
+ && echo "${USER} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/${USER}
+
 # noVNC and Websockify
 RUN git clone https://github.com/AtsushiSaito/noVNC.git -b add_clipboard_support /usr/lib/novnc
 RUN pip install git+https://github.com/novnc/websockify.git@v0.10.0
@@ -73,16 +82,12 @@ RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:mozillateam/ppa -y && 
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-# Install VSCodium
-RUN wget https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg \
-    -O /usr/share/keyrings/vscodium-archive-keyring.asc && \
-    echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.asc ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main' \
-    | tee /etc/apt/sources.list.d/vscodium.list && \
-    apt-get update -q && \
-    apt-get install -y codium && \
-    apt-get autoclean && \
-    apt-get autoremove && \
-    rm -rf /var/lib/apt/lists/*
+# Install VSCode
+RUN sudo apt update && \
+    sudo apt install software-properties-common apt-transport-https wget -y && \
+    wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add - && \
+    sudo add-apt-repository "deb [arch=arm64] https://packages.microsoft.com/repos/vscode stable main" && \
+    sudo apt install code
 
 # Install ROS
 ENV ROS_DISTRO humble
@@ -103,16 +108,15 @@ RUN apt-get update -q && \
 
 RUN rosdep update
 
-# Install simulation package only on amd64
-# Not ready for arm64 for now (July 28th, 2020)
-# https://github.com/Tiryoh/docker-ros2-desktop-vnc/pull/56#issuecomment-1196359860
-RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
-    apt-get update -q && \
-    apt-get install -y \
-    ros-${ROS_DISTRO}-gazebo-ros-pkgs \
-    ros-${ROS_DISTRO}-ros-ign && \
-    rm -rf /var/lib/apt/lists/*; \
-    fi
+# Install simulation package
+RUN curl https://packages.osrfoundation.org/gazebo.gpg --output /usr/share/keyrings/pkgs-osrf-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/pkgs-osrf-archive-keyring.gpg] http://packages.osrfoundation.org/gazebo/ubuntu-stable $(lsb_release -cs) main" \
+    | tee /etc/apt/sources.list.d/gazebo-stable.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y ignition-fortress && \
+    apt-get autoclean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
 
 # Enable apt-get completion after running `apt-get update` in the container
 RUN rm /etc/apt/apt.conf.d/docker-clean
@@ -121,5 +125,9 @@ COPY ./entrypoint.sh /
 RUN dos2unix /entrypoint.sh
 ENTRYPOINT [ "/bin/bash", "-c", "/entrypoint.sh" ]
 
-ENV USER ubuntu
-ENV PASSWD ubuntu
+# Ensure the display used for graphics is always the one of the VNC server
+# e.g. Running "ign gazebo" on the remote shell, launches the gazebo window inside the VNC server rather than the host machine
+ENV DISPLAY=:1
+
+ENV USER=${USER}
+ENV PASSWD=${PASSWD}
