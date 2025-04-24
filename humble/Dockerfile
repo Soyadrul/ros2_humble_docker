@@ -77,7 +77,7 @@ RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:mozillateam/ppa -y && 
 RUN sudo apt update && \
     sudo apt upgrade -y && \
     sudo apt install snapd && \
-    sudo snap install code
+    sudo snap install --classic code
 
 # Install ROS
 ENV ROS_DISTRO humble
