@@ -1,0 +1,10 @@
+services:
+  ros2-container: 
+    build: ./humble/
+    ports:
+      - "6080:80"
+      - "22:22"
+    security_opt:
+      - seccomp=unconfined
+    shm_size: 512m
+    restart: unless-stopped
