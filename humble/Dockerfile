@@ -74,7 +74,10 @@ RUN DEBIAN_FRONTEND=noninteractive add-apt-repository ppa:mozillateam/ppa -y && 
     rm -rf /var/lib/apt/lists/*
 
 # Install VSCode
-RUN sudo snap install code
+RUN sudo apt update && \
+    sudo apt upgrade -y && \
+    sudo apt install snapd && \
+    sudo snap install code
 
 # Install ROS
 ENV ROS_DISTRO humble
