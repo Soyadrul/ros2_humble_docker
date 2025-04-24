@@ -1,11 +1,12 @@
-# Guide on how to create an Ubuntu 22.04 Docker image with ROS2 Humble
+# How to create an Ubuntu 22.04 Docker image with ROS2 Humble
 
-Here you can find everything you need to install Docker on a Raspberry Pi 5 running Raspberry Pi OS (64 bit version) and then making an Ubuntu 22.04 container.
+Here you can find a guide on how to install Docker on a Raspberry Pi 5 and creating an Ubuntu 22.04 container with ROS2 Humble.
+In the next steps I will assume that you are operating from the Raspberry Pi 5 running Raspberry Pi OS (64 bit version), which was the environment I used. If you are struggling to install the OS take a look at this [page](https://www.raspberrypi.com/software/).
 
 ---
 
 ## Download Docker
-Copy the following commands to the terminal:
+Execute the following commands to the terminal:
 1. Update the system
    ```bash
    sudo apt update && sudo apt upgrade -y
@@ -42,8 +43,40 @@ Copy the following commands to the terminal:
    reboot
    ```
 
-6. Verify that you can run ```docker``` command without the need to get superuser privileges (```sudo```)
+6. Verify that you can run ```docker``` command without the need to get superuser privileges
    ```bash
    docker run hello-world
    ```
-   The command found above downloads a test image and runs inside a container. If everything has been done right it should run without any error.
+   The above command downloads a test image and runs it inside a container. If everything has been done right it should finish without any error.
+
+---
+
+## Build the Docker image
+Follow the next steps to build the Ubuntu container:
+
+1. Clone this repo (but before check if there are some upgrades and install ```git```)
+   ```bash
+   sudo apt update && \
+   sudo apt upgrade -y && \
+   sudo apt install git && \
+   git clone https://github.com/Soyadrul/ros2_humble_docker.git && \
+   cd ros2_humble_docker/
+   ```
+
+2. Make the ```entrypoint.sh``` file executable for the current user
+   ```bash
+   chmod u+x humble/entrypoint.sh
+   ```
+
+3. Build the Docker image (this will take a while for the Pi 5)
+   ```bash
+   docker compose -f 'compose.yaml' up -d --build
+   ```
+
+4. Install VSCode
+   ```bash
+   sudo apt install code
+   ```
+
+5. Start VSCode and install the ```Remote Development``` extension (press ```CTRL+SHIFT+X``` to see the extension panel)
+
