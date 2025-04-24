@@ -38,9 +38,9 @@ Execute the following commands to the terminal:
    newgrp docker
    ```
 
-5. Reboot the system to apply the changes
+5. Poweroff the system to apply the changes
    ```bash
-   reboot
+   poweroff
    ```
 
 6. Verify that you can run ```docker``` command without the need to get superuser privileges
