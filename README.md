@@ -15,7 +15,7 @@ In the next steps I will assume that you are operating from the Raspberry Pi 5 r
 ---
 
 ## Download Docker
-Execute the following commands in the terminal:
+Execute the following commands in the terminal to install ```docker```:
 1. Update the system
    ```bash
    sudo apt update && sudo apt upgrade -y
@@ -40,7 +40,7 @@ Execute the following commands in the terminal:
    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
    ```
 
-4. Add the user to the ```docker``` group
+4. Add the current user to the ```docker``` group
    ```bash
    sudo groupadd docker && \
    sudo usermod -aG docker $USER && \
@@ -52,7 +52,7 @@ Execute the following commands in the terminal:
    poweroff
    ```
 
-6. After powering on the Raspberry, verify that you can run ```docker``` command without the need to get superuser privileges
+6. After powering on the Raspberry, verify that you can run the ```docker``` command without superuser privileges
    ```bash
    docker run hello-world
    ```
