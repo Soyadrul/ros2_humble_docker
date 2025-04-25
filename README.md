@@ -6,7 +6,7 @@ In the next steps I will assume that you are operating from the Raspberry Pi 5 r
 ---
 
 ## Download Docker
-Execute the following commands to the terminal:
+Execute the following commands in the terminal:
 1. Update the system
    ```bash
    sudo apt update && sudo apt upgrade -y
@@ -43,7 +43,7 @@ Execute the following commands to the terminal:
    poweroff
    ```
 
-6. Verify that you can run ```docker``` command without the need to get superuser privileges
+6. After powering on the Raspberry, verify that you can run ```docker``` command without the need to get superuser privileges
    ```bash
    docker run hello-world
    ```
@@ -68,7 +68,7 @@ Follow the next steps to build the Ubuntu container:
    chmod u+x humble/entrypoint.sh
    ```
 
-3. Build the Docker image (this will take approximately ~42 minutes)
+3. Build the Docker image (in my case it took approximately 42 minutes)
    ```bash
    docker compose -f 'compose.yaml' up -d --build
    ```
