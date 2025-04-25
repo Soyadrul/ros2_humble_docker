@@ -6,7 +6,7 @@ Index:
   - [Build the Docker image](#build-the-docker-image)
   - [Set up VSCode](#set-up-vscode)
   - [Run the Docker container](#run-the-docker-container)
-  - [Default username and password](#default-username-and-password)
+    - [Default username and password](#default-username-and-password)
 
 
 Here you can find a guide on how to install Docker on a Raspberry Pi 5 and creating an Ubuntu 22.04 container with ROS2 Humble.
@@ -106,9 +106,8 @@ Follow the next steps everytime you want to start the container:
    ```
 3. Now to see the container GUI open the browser and go to this link: [http://localhost:6080/](http://localhost:6080/)
 
----
 
-## Default username and password
+### Default username and password
 The default username and password for the container are:
 - user = ubuntu
 - password = ubuntu
