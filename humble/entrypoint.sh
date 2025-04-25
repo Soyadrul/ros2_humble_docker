@@ -77,6 +77,8 @@ BASHRC_PATH=$HOME/.bashrc
 grep -F "source /opt/ros/$ROS_DISTRO/setup.bash" $BASHRC_PATH || echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> $BASHRC_PATH
 grep -F "export ROS_DOMAIN_ID=100" $BASHRC_PATH || echo "export ROS_DOMAIN_ID=100" >> $BASHRC_PATH
 grep -F "export ROS_LOCALHOST_ONLY=1" $BASHRC_PATH || echo "export ROS_LOCALHOST_ONLY=1" >> $BASHRC_PATH
+grep -F "source /usr/share/colcon_cd/function/colcon_cd.sh" $BASHRC_PATH || echo "source /usr/share/colcon_cd/function/colcon_cd.sh" >> $BASHRC_PATH
+grep -F "export _colcon_cd_root=/opt/ros/humble/" $BASHRC_PATH || echo "export _colcon_cd_root=/opt/ros/humble/" >> $BASHRC_PATH
 grep -F "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" $BASHRC_PATH || echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> $BASHRC_PATH
 chown $USER:$USER $BASHRC_PATH
 
