@@ -1,5 +1,14 @@
 # How to create an Ubuntu 22.04 Docker image with ROS2 Humble
 
+Index:
+- [How to create an Ubuntu 22.04 Docker image with ROS2 Humble](#how-to-create-an-ubuntu-22.04-docker-image-with-ros2-humble)
+  - [Download Docker](#download-docker)
+  - [Build the Docker image](#build-the-docker-image)
+  - [Set up VSCode](#set-up-vscode)
+  - [Run the Docker container](#run-the-docker-container)
+  - [Default username and password](#default-username-and-password)
+
+
 Here you can find a guide on how to install Docker on a Raspberry Pi 5 and creating an Ubuntu 22.04 container with ROS2 Humble.
 In the next steps I will assume that you are operating from the Raspberry Pi 5 running Raspberry Pi OS (64 bit version), which was the environment I used. If you are struggling to install the OS take a look at this [page](https://www.raspberrypi.com/software/).
 
@@ -72,11 +81,34 @@ Follow the next steps to build the Ubuntu container:
    ```bash
    docker compose -f 'compose.yaml' up -d --build
    ```
+---
 
-4. Install VSCode
+## Set up VSCode
+
+1. Install VSCode
    ```bash
    sudo apt install code
    ```
 
-5. Start VSCode and install the ```Remote Development``` extension (press ```CTRL+SHIFT+X``` to see the extension panel)
+2. Start VSCode and install the ```Remote Development``` extension (press ```CTRL+SHIFT+X``` to trigger the extension panel)
 
+---
+
+## Run the Docker container
+
+Follow the next steps everytime you want to start the container:
+
+1. Open the ```ros2_humble_docker``` folder in VSCode
+
+2. Go to ```View->Command Palette...```, or press ```CTRL+SHIFT+P```, and write the following command
+   ```text
+   Dev Containers: Reopen in Container
+   ```
+3. Now to see the container GUI open the browser and go to this link: [http://localhost:6080/](http://localhost:6080/)
+
+---
+
+## Default username and password
+The default username and password for the container are:
+- user = ubuntu
+- password = ubuntu
